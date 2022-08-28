@@ -1,0 +1,4 @@
+src/Wordle.iso
+src/*.o
+src/iso/boot/wordle.bin
+.idea/*

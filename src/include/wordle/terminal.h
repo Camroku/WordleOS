@@ -1,0 +1,39 @@
+/*
+    This file is part of OSDEV Wordle.
+
+    OSDEV Wordle is free software: you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation, either version
+    3 of the License, or (at your option) any later version.
+
+    OSDEV Wordle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty
+    of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public
+    License along with OSDEV Wordle. If not, see
+    <https://www.gnu.org/licenses/>.
+*/
+
+#pragma once
+#include <stdint.h>
+#include <stdbool.h>
+#include <wordle/vga.h>
+#include <stddef.h>
+
+void terminal_initialize(void);
+void terminal_x_move(int steps);
+void terminal_y_move(int steps);
+void terminal_setcolor(enum vga_color fore, enum vga_color back);
+void terminal_putentryat(char c, uint8_t color, size_t x, size_t y);
+void terminal_move_cursor();
+void terminal_move_cursor_to(int cy, int cx);
+void terminal_scroll();
+void terminal_putchar(char c);
+bool terminal_write(const char *text, size_t size);
+void terminal_print(const char *data);
+void terminal_clear();
+int  terminal_print_dec(uint32_t n);
+void terminal_handle_backspace();
+int  terminal_print_hex(uint32_t n);
