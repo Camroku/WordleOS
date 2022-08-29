@@ -65,5 +65,14 @@ void kernel_main(uint32_t magic, uint32_t addr)
     random_seed();
     LOG("Initialized");
     LOG("Starting game");
-    start_game();
+    while (true)
+    {
+        start_game();
+        terminal_move_cursor_to(21, 30);
+        printf("\033[1;31mPress R to restart\033[1;37m");
+        while (!(keyboard_getchar() == 'r' || keyboard_getchar() == 'R'))
+            io_wait();
+        LOG("Restarting game");
+        terminal_clear();
+    }
 }
