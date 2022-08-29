@@ -73,35 +73,32 @@ void start_game(void)
     {
         terminal_move_cursor_to(2 + guess, 34);
         terminal_setcolor(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 6;)
         {
             if (i != 5) {
                 inpt[i] = keyboard_getchar();
-                if (inpt[i] == '\b')
+                if (inpt[i] == '\b' && i > 0)
                 {
-                    if (i > 0)
-                    {
-                        inpt[i] = 0;
+                    inpt[i] = 0;
+                    terminal_x_move(-2);
+                    printf("_ ");
+                    terminal_x_move(-2);
+                    i--;
+                }
+                else if (((inpt[i] >= 'a' && inpt[i] <= 'z') || (inpt[i] >= 'A' && inpt[i] <= 'Z')) && i < 5){
+                    printf("%c ", inpt[i]);
+                    i++;
+                }
+            }
+            else {
+                switch (keyboard_getchar())
+                {
+                    case '\b':
+                        inpt[i-1] = 0;
                         terminal_x_move(-2);
                         printf("_ ");
                         terminal_x_move(-2);
                         i -= 2;
-                    }
-                }
-                else if ((inpt[i] >= 'a' && inpt[i] <= 'z') || (inpt[i] >= 'A' && inpt[i] <= 'Z')){
-                    printf("%c ", inpt[i]);
-                }
-            }
-            else {
-                i--;
-                switch (keyboard_getchar())
-                {
-                    case '\b':
-                        inpt[i] = 0;
-                        terminal_x_move(-2);
-                        printf("_ ");
-                        terminal_x_move(-2);
-                        i -= 1;
                         break;
                     case '\n':
                         i++;
@@ -140,6 +137,11 @@ void start_game(void)
     guess--;
     terminal_move_cursor_to(12, 43);
     printf("%d", guess);
+    terminal_move_cursor_to(14, 35);
+    if (correct)
+        printf("\033[1;32mVICTORY\033[1;37m");
+    else
+        printf("\033[0;31mFAILURE\033[1;37m");
     terminal_move_cursor_to(10, 34);
     for (int i = 0; i < 5; i++)
     {
